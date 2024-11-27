@@ -1,0 +1,36 @@
+0 stage training:
+
+python run.py \
+  --run-type train \
+  --exp-config ivlnce_baselines/config/map_cma/pred_semantics/iterative_maps/0_train_tf.yaml
+
+
+0 stage evaluation:
+
+python run.py \
+  --run-type eval \
+  --exp-config ivlnce_baselines/config/map_cma/pred_semantics/iterative_maps/0_train_tf.yaml
+
+
+1 stage training:
+
+python run.py \
+  --run-type train \
+  --exp-config ivlnce_baselines/config/map_cma/pred_semantics/iterative_maps/1_ftune_dagger.update.16.debug15.yaml \
+  IL.ckpt_to_load data/checkpoints/map_cma/pred_semantics/iterative_maps/0_tf/ckpt.{BEST_CKPT_IDX}.pth
+
+where BEST_CKPT_IDX is the index of the best checkpoint in the 0 stage evaluation
+
+
+1 stage evaluation:
+
+for Validation Seen:
+python -u run.py --run-type eval --exp-config ivlnce_baselines/config/map_cma/pred_semantics/iterative_maps/2_eval_iterative.update.16.debug15.valseen.yaml EVAL.EVAL_START_CKPT {CKPT_ID}
+
+for Validation Unseen:
+python run.py \
+  --run-type eval \
+  --exp-config ivlnce_baselines/config/map_cma/pred_semantics/iterative_maps/2_eval_iterative.update.16.debug.v9.for.debug15.yaml EVAL.EVAL_START_CKPT {CKPT_ID}
+
+
+For fast validation, we provide a checkpoint ckpt.28.pth for evaluation in the OneDrive share folder.

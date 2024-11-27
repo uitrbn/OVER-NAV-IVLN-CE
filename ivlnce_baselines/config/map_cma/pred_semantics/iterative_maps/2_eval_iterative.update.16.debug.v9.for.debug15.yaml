@@ -1,0 +1,24 @@
+BASE_TASK_CONFIG_PATH: habitat_extensions/config/map_cma/pred_semantics/iterative_task.yaml
+NUM_ENVIRONMENTS: 11
+TENSORBOARD_DIR: data/tensorboard_dirs/map_cma/pred_semantics/iterative_maps/1_ftune.update16.debug/iterative_evals.realtime.v9.for.debug15
+EVAL_CKPT_PATH_DIR: data/checkpoints/map_cma/pred_semantics/iterative_maps/1_ftune.update16.debug15
+LOG_FILE: data/logs/map_cma/pred_semantics/iterative_maps/1_ftune.update16.debug.realtime.v9.for.debug15
+RESULTS_DIR: data/checkpoints/map_cma/pred_semantics/iterative_maps/1_ftune.update16.debug/iterative_evals.realtime.v9.for.debug15
+
+KEYWORDS_MAP: True
+DETECTION_DB_SPLIT: val_unseen
+
+USE_PANO: True
+
+EVAL:
+  SPLIT: val_unseen
+  iterative_map_reset: iterative
+  EVAL_START_CKPT: 0
+
+RL:
+  POLICY:
+    OBS_TRANSFORMS:
+      ENABLED_TRANSFORMS: [KeywordsPredictedSemanticsIterativeMapper3]
+
+MODEL:
+  policy_name: MapCMAPolicy
